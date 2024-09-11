@@ -1,13 +1,13 @@
 import Head from "next/head";
 
-import { Container, ProductCard, ProductsGrid } from "@/styles/home";
+import { Container, ProductCard, ProductsGrid, ProductsWrapper } from "@/styles/home";
 import Image from "next/image";
 
 export async function getServerSideProps() {
   const res = await fetch(`https://fakestoreapi.com/products`);
   const data = await res.json();
 
-  console.log(data);
+  // console.log(data);
 
   return {
     props: {
@@ -27,20 +27,22 @@ export default function Home({ products }) {
       </Head>
       
       <Container>
-        <ProductsGrid>
-          { products.map((product) => [
-            <ProductCard>
-              <Image 
-                src={product.image}
-                width={200}
-                height={200}
-                alt={product.title}
-              />
-              <h2>{product.title}</h2>
-              <p>{product.description}</p>
-            </ProductCard>
-          ])}
-        </ProductsGrid>
+        <ProductsWrapper>
+          <ProductsGrid>
+            { products.map((product) => [
+              <ProductCard>
+                <Image 
+                  src={product.image}
+                  width={200}
+                  height={200}
+                  alt={product.title}
+                />
+                <h3>{product.title}</h3>
+                <p>{product.description}</p>
+              </ProductCard>
+            ])}
+          </ProductsGrid>
+        </ProductsWrapper>
       </Container>
     </>
   );

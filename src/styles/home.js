@@ -4,10 +4,19 @@ export const Container = styled.div`
     
 `;
 
+export const ProductsWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+`;
+
 export const ProductsGrid = styled.div`
     display: grid;
-    width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-content: center;
+    width: 80%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     max-width: 1300px;
     gap: 20px;
 `;
