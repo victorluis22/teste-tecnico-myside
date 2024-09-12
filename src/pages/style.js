@@ -8,16 +8,18 @@ export const Container = styled.div`
 
 export const Main = styled.main`
     display: flex;
+    flex-direction: column;
+    padding: 30px;
     flex: 1;
     background-color: ${props => props.theme.colors.background};
 `;
 
 export const ProductsContainer = styled.div`
     display: flex;
+    margin: 10px 0px;
     width: 100%;
     justify-content: center;
     align-items: center;
-    padding: 30px;
 `;
 
 export const Grid = styled.div`

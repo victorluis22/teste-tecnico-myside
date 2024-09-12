@@ -3,19 +3,31 @@ import Head from "next/head";
 import { Grid, ProductsContainer } from "./style";
 
 import ProductCard from "@/components/home/ProductCard";
+import PageSelect from "@/components/home/PageSelect";
 
-export async function getServerSideProps() {
-  const res = await fetch(`https://fakestoreapi.in/api/products`);
+// Má prática. A fakestoreapi não tem um endpoint que especifica o total de produtos. 
+// No site da documentação está dizendo que são 150. Vou colocar estático no código mas o ideal seria que a api retornasse essa informação.
+const TOTAL_PRODUCTS = 150; 
+
+const PRODUCTS_PER_PAGE = 30;
+
+export async function getServerSideProps({ query }) {
+  const page = parseInt(query.page) || 1;
+
+  const res = await fetch(`https://fakestoreapi.in/api/products?page=${page}&limit=${PRODUCTS_PER_PAGE}`);
   const data = await res.json();
 
   return {
     props: {
+      actualPage: page,
       products: data.products,
     },
   };
 }
 
-export default function Home({ products }) {
+export default function Home({ actualPage, products }) {
+  const totalPages = TOTAL_PRODUCTS / PRODUCTS_PER_PAGE;
+
   return (
     <>
       <Head>
@@ -25,6 +37,7 @@ export default function Home({ products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
+      <h3>{`${products.length} produtos encontrados`}</h3>
       <ProductsContainer>
         <Grid>
           { products.map(({id, title, description, image, price, discount}) => [
@@ -32,6 +45,8 @@ export default function Home({ products }) {
           ])}
         </Grid>
       </ProductsContainer>
+
+      <PageSelect actual={actualPage} total={totalPages}/>
     </>
   );
 }
