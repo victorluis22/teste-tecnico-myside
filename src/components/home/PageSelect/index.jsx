@@ -8,7 +8,10 @@ export default function PageSelect({ actual, total }) {
   const router = useRouter();
 
   const handleChange = (event, value) => {
-    router.push(`/?page=${value}`)
+    router.push({
+      pathname: "/",
+      query: {page: value}, 
+    });
   }
 
   return (

@@ -1,32 +1,48 @@
+import { AdjustmentsContainer, Grid, ProductsContainer } from "@/styles/home";
+import { useRouter } from "next/router";
+
 import Head from "next/head";
-
-import { Grid, ProductsContainer } from "@/styles/home";
-
 import ProductCard from "@/components/home/ProductCard";
 import PageSelect from "@/components/home/PageSelect";
+import Filter from "@/components/home/Filter";
 
-// Má prática. A fakestoreapi não tem um endpoint que especifica o total de produtos. 
-// No site da documentação está dizendo que são 150. Vou colocar estático no código mas o ideal seria que a api retornasse essa informação.
+
+// A fakestoreapi não tem um endpoint que especifica o total de produtos. 
+// No site da documentação (https://fakestoreapi.in/docs) está dizendo que são 150. 
+// Vou colocar estático no código mas o ideal seria que a api retornasse essa informação.
 const TOTAL_PRODUCTS = 150; 
 
 const PRODUCTS_PER_PAGE = 30;
 
 export async function getServerSideProps({ query }) {
   const page = parseInt(query.page) || 1;
+  const category = query.category || null;
+  var productsResponse;
 
-  const res = await fetch(`https://fakestoreapi.in/api/products?page=${page}&limit=${PRODUCTS_PER_PAGE}`);
-  const data = await res.json();
+  if (category){
+    productsResponse = await fetch(`https://fakestoreapi.in/api/products/category?type=${category}`)
+  }
+  else{
+    productsResponse = await fetch(`https://fakestoreapi.in/api/products?page=${page}&limit=${PRODUCTS_PER_PAGE}`);
+  }
+
+  const categoryResponse = await fetch("https://fakestoreapi.in/api/products/category");
+
+  const data1 = await productsResponse.json();
+  const data2 = await categoryResponse.json();
 
   return {
     props: {
       actualPage: page,
-      products: data.products,
+      products: data1.products,
+      categories: data2.categories
     },
   };
 }
 
-export default function Home({ actualPage, products }) {
+export default function Home({ actualPage, products, categories }) {
   const totalPages = TOTAL_PRODUCTS / PRODUCTS_PER_PAGE;
+  const router = useRouter();
 
   return (
     <>
@@ -37,7 +53,10 @@ export default function Home({ actualPage, products }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <h3>{`${products.length} produtos encontrados`}</h3>
+      <AdjustmentsContainer>
+        <h3>{`${products.length} products found`}</h3>
+        <Filter categories={categories}/>
+      </AdjustmentsContainer>
       <ProductsContainer>
         <Grid>
           { products.map(({id, title, description, image, price, discount}) => [
@@ -46,7 +65,9 @@ export default function Home({ actualPage, products }) {
         </Grid>
       </ProductsContainer>
 
-      <PageSelect actual={actualPage} total={totalPages}/>
+      {
+        !router.query.category ? <PageSelect actual={actualPage} total={totalPages}/> : null
+      }
     </>
   );
 }

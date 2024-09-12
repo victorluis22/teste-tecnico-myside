@@ -14,6 +14,12 @@ export const Main = styled.main`
     background-color: ${props => props.theme.colors.background};
 `;
 
+export const AdjustmentsContainer = styled.div`
+    display: flex;
+    gap: 5px;
+    align-items: center;
+`;
+
 export const ProductsContainer = styled.div`
     display: flex;
     margin: 10px 0px;
