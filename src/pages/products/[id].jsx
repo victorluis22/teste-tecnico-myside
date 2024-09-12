@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 
-import { Container, Card, Info, Header, Details, Button } from "./style";
+import { Container, Card, Info, Header, Details, Button } from "@/styles/product";
 import CashDisplay from "@/components/global/CashDisplay";
 
 export async function getServerSideProps(context) {

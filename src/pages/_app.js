@@ -1,6 +1,6 @@
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'styled-components';
-import { Container, Main } from './style';
+import { Container, Main } from '@/styles/home';
 
 import Header from "@/components/global/Header";
 import GlobalStyle from '@/config/globalStyle';

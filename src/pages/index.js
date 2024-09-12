@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-import { Grid, ProductsContainer } from "./style";
+import { Grid, ProductsContainer } from "@/styles/home";
 
 import ProductCard from "@/components/home/ProductCard";
 import PageSelect from "@/components/home/PageSelect";
