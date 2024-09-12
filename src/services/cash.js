@@ -1,6 +1,6 @@
 export const formatMoney = (amount) => {
-    return amount.toLocaleString('pt-BR', {
+    return amount.toLocaleString('en-US', {
       style: 'currency',
-      currency: 'BRL',
+      currency: 'USD',
     });
 };

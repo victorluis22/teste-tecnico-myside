@@ -8,11 +8,14 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.colors.text};
   }
 
+  input, select, textarea, button {
+    font-family: inherit;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
   }
-
 `;
 
 export default GlobalStyle;

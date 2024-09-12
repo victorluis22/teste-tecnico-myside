@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google';
 import { ThemeProvider } from 'styled-components';
+import { Container, Main } from './style';
 
 import Header from "@/components/global/Header";
 import GlobalStyle from '@/config/globalStyle';
@@ -11,12 +12,12 @@ export default function App({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme} >
       <GlobalStyle />
-      <div className={inter.className}>
+      <Container className={inter.className}>
         <Header />
-        <main>
+        <Main>
           <Component {...pageProps} />
-        </main>
-      </div>
+        </Main>
+      </Container>
     </ThemeProvider>
   );
 }
