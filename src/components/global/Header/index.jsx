@@ -1,9 +1,12 @@
 import Image from "next/image";
-import { CartButton, Container, SearchBar } from "./style";
 
+import { Container, SearchBar, ShoppingCart } from "./style";
 import { AiOutlineShoppingCart } from "react-icons/ai";
+import { useTheme } from "styled-components";
 
 export default function Header () {
+    const theme = useTheme();
+
     return (
         <Container>
             <Image
@@ -15,10 +18,9 @@ export default function Header () {
 
             <SearchBar type="text" placeholder="Busque seu produto pelo nome"/>
 
-            <CartButton>
-                <span>Meu Carrinho</span>
-                <AiOutlineShoppingCart size={30}/>
-            </CartButton>
+            <ShoppingCart>
+                <AiOutlineShoppingCart size={30} color={theme.colors.highlight}/>
+            </ShoppingCart>
         </Container>
     )
 }
