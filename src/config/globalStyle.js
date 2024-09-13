@@ -4,7 +4,8 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     padding: 0;
-    margin: 0; 
+    margin: 0;
+    scroll-behavior: smooth;
   }
 
   p, span, h1, h2, h3, h4 {

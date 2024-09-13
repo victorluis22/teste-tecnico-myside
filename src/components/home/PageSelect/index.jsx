@@ -1,22 +1,18 @@
 import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
 
-import { useRouter } from 'next/router';
 import { Container } from './style';
 
-export default function PageSelect({ actual, total }) {
-  const router = useRouter();
+export default function PageSelect({ currentPage, pageCount, onPageChange }) {
 
   const handleChange = (event, value) => {
-    router.push({
-      pathname: "/",
-      query: {page: value}, 
-    });
+    onPageChange(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
     <Container>
-      <Pagination count={total} page={actual} onChange={handleChange}/>
+      <Pagination count={pageCount} page={currentPage} onChange={handleChange}/>
     </Container>
   );
 }
