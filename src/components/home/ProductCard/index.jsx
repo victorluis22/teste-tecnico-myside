@@ -14,10 +14,12 @@ export default function ProductCard ({ id, image, title, description, price, dis
                 width={200}
                 height={200}
                 alt={title}
+                style={{objectFit: "contain"}}
+                loading="lazy"
             />
             <CashDisplay amount={price} discount={discount} />
 
-            <h3>{title.slice(0, 60) + "..."}</h3>
+            <h4>{title.slice(0, 60) + "..."}</h4>
             <p>{description.slice(0, 60) + "..."}</p>
         </Container>
     )

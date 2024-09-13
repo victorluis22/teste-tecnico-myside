@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Image from "next/image";
-
-import { Container, Card, Info, Header, Details, Button } from "@/styles/product";
 import CashDisplay from "@/components/global/CashDisplay";
 
-export async function getServerSideProps(context) {
-    const { id } = context.params;
+import { Container, Card, Info, Header, Details, Button, ProductImage, ImageContainer } from "@/styles/product";
+import { capitalizeFirstLetter } from "@/services/string";
+import Image from "next/image";
+
+export async function getServerSideProps({ params }) {
+    const { id } = params;
 
     const res = await fetch(`https://fakestoreapi.in/api/products/${id}`);
     const data = await res.json();
@@ -13,7 +14,7 @@ export async function getServerSideProps(context) {
     return {
       props: {
         product: data.product,
-      },
+      }
     };
   }
 
@@ -32,20 +33,17 @@ export default function Product ({ product }){
 
             <Container>
                 <Card>
-                    <p>Category: <b>{category.charAt(0).toUpperCase() + category.slice(1)}</b></p>
+                    <p>Category: <b>{capitalizeFirstLetter(category)}</b></p>
                     <Header>
-                        <Image 
-                            src={image}
-                            width={400}
-                            height={400}
-                            alt={title}
-                        />
+                        <ImageContainer>
+                            <Image src={image} alt={title} fill style={{objectFit: "contain"}} loading="lazy"/>
+                        </ImageContainer>
                         <Info>
                             <h3>{title}</h3>
                             <CashDisplay amount={price} discount={discount} />
-                            <p>Brand: <b>{brand}</b></p>
-                            <p>Model: <b>{model}</b></p>
-                            <p>Color: <b>{color}</b></p>
+                            <p>Brand: <b>{capitalizeFirstLetter(brand)}</b></p>
+                            <p>Model: <b>{capitalizeFirstLetter(model)}</b></p>
+                            <p>Color: <b>{capitalizeFirstLetter(color)}</b></p>
 
                             <Button>Add to cart</Button>
                         </Info>

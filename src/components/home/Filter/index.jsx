@@ -5,8 +5,6 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
@@ -44,7 +42,7 @@ export default function Filter({ categories }) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} variant="outlined" color='#000' endIcon={<HiOutlineAdjustmentsHorizontal />}>{category ? category : "All"}</Button>
+      <Button onClick={handleClickOpen} variant="outlined" color='#000' endIcon={<HiOutlineAdjustmentsHorizontal />}>{router.query.category ?? "All"}</Button>
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>Categories</DialogTitle>
         <DialogContent>
@@ -57,8 +55,8 @@ export default function Filter({ categories }) {
               >
                 <option selected aria-label="None" value="">All</option>
                 {
-                  categories.map((category) => {
-                    return <option value={category}>{capitalizeFirstLetter(category)}</option>
+                  categories.map((category, index) => {
+                    return <option key={index} value={category}>{capitalizeFirstLetter(category)}</option>
                   })
                 }
               </Select>
