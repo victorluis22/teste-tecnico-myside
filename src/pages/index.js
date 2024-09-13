@@ -4,7 +4,6 @@ import Head from "next/head";
 import ProductCard from "@/components/home/ProductCard";
 import PageSelect from "@/components/home/PageSelect";
 import Filter from "@/components/home/Filter";
-import { useState } from "react";
 
 // A fakestoreapi não tem um endpoint que especifica o total de produtos. 
 // No site da documentação (https://fakestoreapi.in/docs) está dizendo que são 150. 
@@ -13,7 +12,8 @@ const TOTAL_PRODUCTS = 150;
 const PRODUCTS_PER_PAGE = 30;
 
 export async function getServerSideProps({ query }) {
-  const category = query.category ?? null;
+  const currentPage = parseInt(query.page) || 1;
+  const category = query.category || null;
   var productsResponse;
 
   if (category){
@@ -28,21 +28,22 @@ export async function getServerSideProps({ query }) {
   const { products } = await productsResponse.json();
   const { categories } = await categoryResponse.json();
 
+  // Na página 1, pega de [0 a 30], na página 2, pega de [30, 60], assim por diante... 
+  const currentPageProducts = products.slice((currentPage-1) * PRODUCTS_PER_PAGE, (currentPage * PRODUCTS_PER_PAGE));
+
   return {
     props: {
-      products,
-      categories
+      currentPageProducts,
+      categories,
+      currentPage,
+      productTotalQtd: products.length
     }
   };
 }
 
-export default function Home({ products, categories }) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageCount = Math.ceil(products.length / PRODUCTS_PER_PAGE);
+export default function Home({ currentPageProducts, categories, currentPage, productTotalQtd }) {
+  const pageCount = Math.ceil(productTotalQtd / PRODUCTS_PER_PAGE);
 
-  // Na página 1, pega de [0 a 30], na página 2, pega de [30, 60], assim por diante... 
-  const pageProducts = products.slice((currentPage-1) * PRODUCTS_PER_PAGE, (currentPage * PRODUCTS_PER_PAGE))
-  
   return (
     <>
       <Head>
@@ -53,18 +54,18 @@ export default function Home({ products, categories }) {
       </Head>
       
       <AdjustmentsContainer>
-        <h3>{`${products.length} products found`}</h3>
+        <h3>{`${productTotalQtd} products found`}</h3>
         <Filter categories={categories}/>
       </AdjustmentsContainer>
       <ProductsContainer>
         <Grid>
-          { pageProducts.map(({id, title, description, image, price, discount}) => [
+          { currentPageProducts.map(({id, title, description, image, price, discount}) => [
             <ProductCard key={id} id={id} title={title} description={description} image={image} price={price} discount={discount}/>
           ])}
         </Grid>
       </ProductsContainer>
 
-      <PageSelect currentPage={currentPage} pageCount={pageCount} onPageChange={setCurrentPage}/>
+      <PageSelect currentPage={currentPage} pageCount={pageCount}/>
     </>
   );
 }
