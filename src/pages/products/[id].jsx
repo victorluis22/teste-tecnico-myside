@@ -1,9 +1,11 @@
 import Head from "next/head";
 import CashDisplay from "@/components/global/CashDisplay";
-
-import { Container, Card, Info, Header, Details, Button, ProductImage, ImageContainer } from "@/styles/product";
-import { capitalizeFirstLetter } from "@/services/string";
+import BasicButton from "@/components/global/BasicButton";
 import Image from "next/image";
+
+import { Container, Card, Info, Header, Details, ImageContainer } from "@/styles/product";
+import { capitalizeFirstLetter } from "@/services/string";
+import { FaCartShopping } from "react-icons/fa6";
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -19,8 +21,11 @@ export async function getServerSideProps({ params }) {
   }
 
 export default function Product ({ product }){
+    const { title, description, category, image, price, discount, brand, model, color } = product;
 
-    const {title, description, category, image, price, discount, brand, model, color} = product;
+    const addToCart = () => {
+        alert("Added to cart");
+    };
 
     return (
         <>
@@ -36,7 +41,7 @@ export default function Product ({ product }){
                     <p>Category: <b>{capitalizeFirstLetter(category)}</b></p>
                     <Header>
                         <ImageContainer>
-                            <Image src={image} alt={title} fill style={{objectFit: "contain"}} loading="lazy"/>
+                            <Image src={image} alt={title} fill style={{objectFit: "contain"}} priority/>
                         </ImageContainer>
                         <Info>
                             <h3>{title}</h3>
@@ -45,12 +50,12 @@ export default function Product ({ product }){
                             <p>Model: <b>{capitalizeFirstLetter(model)}</b></p>
                             <p>Color: <b>{capitalizeFirstLetter(color)}</b></p>
 
-                            <Button>Add to cart</Button>
+                            <BasicButton text={"Add to cart"} icon={<FaCartShopping/>} action={addToCart}/>
                         </Info>
                     </Header>
 
                     <Details>
-                        <h4>Product Description</h4>
+                        <h3>Product Description</h3>
                         <p>{description}</p>
                     </Details>
                 </Card>

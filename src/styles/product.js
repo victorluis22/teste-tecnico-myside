@@ -1,46 +1,48 @@
-import Image from "next/image";
 import styled from "styled-components";
 
 export const Container = styled.div`
     display: flex;
-    flex: 1;
     justify-content: center;
-    align-items: center; 
+    width: 100%;
 `;
 
 export const Card = styled.div`
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     background-color: ${props => props.theme.colors.foreground};
     max-width: ${props => props.theme.widths.max};
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     border-radius: 5px;
     padding: 20px;
     gap: 20px;
+
+    @media screen and (min-width: 800px) {
+        width: 90%;
+    }
 `;
 
 export const Header = styled.div`
     display: flex;
     justify-content: center;
-    flex-direction: row;
+    flex-direction: column;
     gap: 20px;
 
-    @media screen and (max-width: 800px) {
-        flex-direction: column;
+    @media screen and (min-width: 800px) {
+        flex-direction: row;
     }
 `;
 
 export const ImageContainer = styled.div`
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 200px;
+    height: 200px;
     justify-self: center;
     align-self: center;
 
-    @media screen and (max-width: 800px) {
-        width: 200px;
-        height: 200px;
+    @media screen and (min-width: 800px) {
+        width: 400px;
+        height: 400px;
     }
 `;
 
@@ -48,30 +50,15 @@ export const Info = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 50%;
+    width: 100%;
 
-    @media screen and (max-width: 800px) {
-        width: 100%;
-    }
-`;
-
-export const Button = styled.button`
-    background-color: ${props => props.theme.colors.highlight};
-    padding: 20px;
-    width: 50%;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    color: ${props => props.theme.colors.foreground};
-    font-weight: bold;
-
-    &:hover{
-        filter: brightness(80%);
-        transition: 0.3s filter;
+    @media screen and (min-width: 800px) {
+        width: 50%;
     }
 `;
 
 export const Details = styled.div`
-
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 `;

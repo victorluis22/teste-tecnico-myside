@@ -4,7 +4,10 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     padding: 0;
-    margin: 0;
+    margin: 0; 
+  }
+
+  p, span, h1, h2, h3, h4 {
     color: ${props => props.theme.colors.text};
   }
 

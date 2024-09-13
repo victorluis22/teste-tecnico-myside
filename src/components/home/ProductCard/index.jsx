@@ -1,4 +1,4 @@
-import { Container } from "./style";
+import { Container, ImageContainer } from "./style";
 import { useRouter } from "next/router";
 
 import CashDisplay from "@/components/global/CashDisplay";
@@ -9,14 +9,9 @@ export default function ProductCard ({ id, image, title, description, price, dis
 
     return (
         <Container onClick={() => router.push(`/products/${id}`)}>
-            <Image 
-                src={image}
-                width={200}
-                height={200}
-                alt={title}
-                style={{objectFit: "contain"}}
-                loading="lazy"
-            />
+            <ImageContainer>
+                <Image src={image} alt={title} width={200} height={200} style={{objectFit: "contain"}} loading="lazy"/>
+            </ImageContainer>
             <CashDisplay amount={price} discount={discount} />
 
             <h4>{title.slice(0, 60) + "..."}</h4>

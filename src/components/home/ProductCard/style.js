@@ -16,4 +16,9 @@ export const Container = styled.div`
     }
 `;
 
+export const ImageContainer = styled.div`
+    justify-self: center;
+    align-self: center;
+`;
+
 
