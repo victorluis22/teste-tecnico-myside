@@ -11,8 +11,15 @@ import Filter from "@/components/home/Filter";
 const TOTAL_PRODUCTS = 150; 
 const PRODUCTS_PER_PAGE = 30;
 
+export function findProductByName(name, products) {
+  return products.filter(product => 
+    product.title.toLowerCase().includes(name.toLowerCase())
+  );
+}
+
 export async function getServerSideProps({ query }) {
   const currentPage = parseInt(query.page) || 1;
+  const productName = query.name || null;
   const category = query.category || null;
   var productsResponse;
 
@@ -28,15 +35,17 @@ export async function getServerSideProps({ query }) {
   const { products } = await productsResponse.json();
   const { categories } = await categoryResponse.json();
 
+  const productsFound = productName ? findProductByName(productName, products) : products;
+
   // Na página 1, pega de [0 a 30], na página 2, pega de [30, 60], assim por diante... 
-  const currentPageProducts = products.slice((currentPage-1) * PRODUCTS_PER_PAGE, (currentPage * PRODUCTS_PER_PAGE));
+  const currentPageProducts = productsFound.slice((currentPage-1) * PRODUCTS_PER_PAGE, (currentPage * PRODUCTS_PER_PAGE));
 
   return {
     props: {
       currentPageProducts,
       categories,
       currentPage,
-      productTotalQtd: products.length
+      productTotalQtd: productsFound.length
     }
   };
 }

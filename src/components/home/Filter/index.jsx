@@ -18,12 +18,21 @@ export default function Filter({ categories }) {
   const [category, setCategory] = React.useState(router.query.category);
 
   const handleSearch = () => {
+    const query = router.query;
+
+    // Só as categorias diferentes de All aparecem como query na URL
+    if (category !== "All") {
+      query.category = category;
+    } else {
+      delete query.category; 
+    }
+
+    setOpen(false);
+
     router.push({
       pathname: "/",
-      query: category ? {category} : null, 
+      query
     });
-
-    setOpen(false); 
   }
 
   const handleChange = (event) => {
@@ -53,7 +62,7 @@ export default function Filter({ categories }) {
                 value={category}
                 onChange={handleChange}
               >
-                <option selected aria-label="None" value="">All</option>
+                <option defaultValue={"All"} aria-label="None" value="All">All</option>
                 {
                   categories.map((category, index) => {
                     return <option key={index} value={category}>{capitalizeFirstLetter(category)}</option>

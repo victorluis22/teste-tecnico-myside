@@ -4,11 +4,15 @@ export const Container = styled.header`
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 10px 30px;
+    padding: 10px 10px;
     background-color: ${props => props.theme.colors.foreground};
 
     @media screen and (min-width: 400px) {
         align-items: center;
+    }
+
+    @media screen and (min-width: 800px) {
+        padding: 10px 30px;
     }
 
 `;
@@ -30,17 +34,25 @@ export const SearchContainer = styled.div`
     }
 `;
 
-export const SearchBar = styled.input`
+export const SearchBar = styled.form`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid ${props => props.theme.colors.background};
     border-radius: 5px;
     background-color: ${props => props.theme.colors.background};
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    padding: 10px 20px;
     width: 100%;
-
-    max-width: ${props => props.theme.widths.max};
+    padding: 10px 20px;
+    gap: 20px;
 `;
 
-export const ShoppingCart = styled.div`
-    cursor: pointer;   
+export const SearchBarInput = styled.input`
+    width: 90%;
+    max-width: ${props => props.theme.widths.max};
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-right: 10px;
+    border-right: 1px solid ${props => props.theme.colors.highlight};
 `;

@@ -8,9 +8,18 @@ export default function PageSelect({ currentPage, pageCount }) {
   const router = useRouter();
 
   const handleChange = (event, value) => {
+    const query = router.query;
+
+    // Só vai aparecer como query na URL páginas que não sejam a primeira
+    if (value > 1) {
+      query.page = parseInt(value);
+    } else {
+      delete query.page; 
+    }
+
     router.push({
       pathname: "/",
-      query: {...router.query, page: parseInt(value)}, 
+      query
     });
   }
 
