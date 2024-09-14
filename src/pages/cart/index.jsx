@@ -29,7 +29,7 @@ export default function Cart () {
                                 return <ProductRow key={product.id} {...product}/>
                             })
                         :
-                            <h3>You don't have products in your shopping cart</h3>
+                            <h3>{"You don't have products in your shopping cart"}</h3>
                     }
 
                     <ButtonContainer>
