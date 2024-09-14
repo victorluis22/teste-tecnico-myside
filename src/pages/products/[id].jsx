@@ -38,7 +38,7 @@ export default function Product ({ product }){
 
             <Container>
                 <Card>
-                    <p>Category: <b>{capitalizeFirstLetter(category)}</b></p>
+                    <p>Category: <b>{category ? capitalizeFirstLetter(category): "Not informed"}</b></p>
                     <Header>
                         <ImageContainer>
                             <Image src={image} alt={title} fill style={{objectFit: "contain"}} priority/>
@@ -46,9 +46,9 @@ export default function Product ({ product }){
                         <Info>
                             <h3>{title}</h3>
                             <CashDisplay amount={price} discount={discount} />
-                            <p>Brand: <b>{capitalizeFirstLetter(brand)}</b></p>
-                            <p>Model: <b>{capitalizeFirstLetter(model)}</b></p>
-                            <p>Color: <b>{capitalizeFirstLetter(color)}</b></p>
+                            <p>Brand: <b>{brand ? capitalizeFirstLetter(brand) : "Not informed"}</b></p>
+                            <p>Model: <b>{model ? capitalizeFirstLetter(model) : "Not informed"}</b></p>
+                            <p>Color: <b>{color ? capitalizeFirstLetter(color) : "Not informed"}</b></p>
 
                             <BasicButton text={"Add to cart"} icon={<FaCartShopping/>} action={addToCart}/>
                         </Info>
@@ -56,7 +56,7 @@ export default function Product ({ product }){
 
                     <Details>
                         <h3>Product Description</h3>
-                        <p>{description}</p>
+                        <p>{description ?? "Not informed"}</p>
                     </Details>
                 </Card>
             </Container>
