@@ -10,7 +10,9 @@ import Filter from "@/components/home/Filter";
 // No site da documentação (https://fakestoreapi.in/docs) está dizendo que são 150. 
 // Vou colocar estático no código mas o ideal seria que a api retornasse essa informação.
 const TOTAL_PRODUCTS = 150; 
+
 const PRODUCTS_PER_PAGE = 30;
+const LOADING_PRIORITY = 4;
 
 export async function getServerSideProps({ query }) {
   const currentPage = parseInt(query.page) || 1;
@@ -63,9 +65,14 @@ export default function Home({ currentPageProducts, categories, currentPage, pro
       </AdjustmentsContainer>
       <ProductsContainer>
         <Grid>
-          { currentPageProducts.map(({id, title, description, image, price, discount}) => [
-            <ProductCard key={id} id={id} title={title} description={description} image={image} price={price} discount={discount}/>
-          ])}
+          { currentPageProducts.map(({id, title, description, image, price, discount}, index) => {
+            // Carrega mais rápido as imagens que vão aparecer primeiro, as outras ficam com lazy loading
+            if(index <=  LOADING_PRIORITY){
+              return <ProductCard key={id} id={id} title={title} description={description} image={image} price={price} discount={discount} priority={true}/>
+            }
+
+            return <ProductCard key={id} id={id} title={title} description={description} image={image} price={price} discount={discount}/>
+          })}
         </Grid>
       </ProductsContainer>
 
