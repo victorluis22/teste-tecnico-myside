@@ -12,7 +12,7 @@ export default function Cart () {
     const router = useRouter();
 
     const handlePurchase = () =>{
-        alert("You have completed your purchase. Your products are on the way!!");
+        window.alert("You have completed your purchase. Your products are on the way!!");
         router.push("/");
         clearCart();
     }
@@ -25,8 +25,8 @@ export default function Cart () {
                 <Card>
                     {
                        total > 0 ?
-                            products.map((product) => {
-                                return <ProductRow key={product.id} {...product}/>
+                            products.map((product, index) => {
+                                return <ProductRow key={index} {...product}/>
                             })
                         :
                             <h3>{"You don't have products in your shopping cart"}</h3>

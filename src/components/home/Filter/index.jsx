@@ -51,7 +51,15 @@ export default function Filter({ categories }) {
 
   return (
     <div>
-      <Button onClick={handleClickOpen} variant="outlined" color='#000' endIcon={<HiOutlineAdjustmentsHorizontal />}>{router.query.category ?? "All"}</Button>
+      <Button 
+        onClick={handleClickOpen} 
+        variant="outlined" 
+        color='#000' 
+        endIcon={<HiOutlineAdjustmentsHorizontal />}
+      >
+        {router.query.category ? capitalizeFirstLetter(router.query.category) : "All"}
+      </Button>
+      
       <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
         <DialogTitle>Categories</DialogTitle>
         <DialogContent>

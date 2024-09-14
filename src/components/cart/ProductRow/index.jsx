@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function ProductRow (product) {
     const theme = useTheme();
-    const { title, image, price} = product;
+    const { title, image, price } = product;
     const { removeProduct } = useContext(CartContext);
 
     return (

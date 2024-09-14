@@ -60,11 +60,5 @@ describe("Testing Home page rendering", () => {
       
       expect(screen.getByText("2 products found")).toBeInTheDocument();
     });
-  
-    // it("Renders the PageSelect component", () => {
-    //   render(<Home {...mockProps} />);
-      
-    //   expect(screen.getByText("Next")).toBeInTheDocument();
-    // });
 });
   

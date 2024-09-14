@@ -1,42 +1,71 @@
-import { ThemeProvider } from "styled-components";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from '@testing-library/react';
+import { CartContext } from '@/context/cart';
+import { useRouter } from 'next/router';
+import { ThemeProvider } from 'styled-components';
 
-import Product from "@/pages/products/[id]";
-import theme from "@/config/theme";
+import Product from '@/pages/products/[id]';
+import theme from '@/config/theme';
 import "@testing-library/jest-dom";
-  
-describe("Testing Product page rendering", () => {
-    it("Renders product card", () => {
-        const mockProps = {
-            product: {
-                id: 1,
-                title: "Product 1",
-                description: "Description 1",
-                category: "Category 1",
-                image: "/image1.jpg",
-                price: 10,
-                discount: 10,
-                brand: "brand 1",
-                model: "model 1",
-                color: "color 1"
-            }
-        };
 
-        render(
-            <ThemeProvider theme={theme}>
-                <Product {...mockProps} />
-            </ThemeProvider>
-        );
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
 
-        expect(screen.getByText("Category 1")).toBeInTheDocument();
-        expect(screen.getByText("Product 1")).toBeInTheDocument();
-        expect(screen.getByText("$11.00")).toBeInTheDocument();
-        expect(screen.getByText("$10.00")).toBeInTheDocument();
-        expect(screen.getByText("- 10% OFF")).toBeInTheDocument();
-        expect(screen.getByText("Brand 1")).toBeInTheDocument();
-        expect(screen.getByText("Model 1")).toBeInTheDocument();
-        expect(screen.getByText("Color 1")).toBeInTheDocument();
-        expect(screen.getByText("Description 1")).toBeInTheDocument();
-    });
+const mockAddProduct = jest.fn();
+
+describe('Testing Product Page', () => {
+  const product = {
+    id: 1,
+    title: 'Test Product',
+    description: 'This is a test product',
+    category: 'electronics',
+    image: '/test-image.jpg',
+    price: 100,
+    discount: 10,
+    brand: 'test brand',
+    model: 'test model',
+    color: 'blue'
+  };
+
+  useRouter.mockReturnValue({
+    push: jest.fn(),
+  });
+
+  it('Should render the product information correctly', () => {
+    render(
+      <ThemeProvider theme={theme}>
+        <CartContext.Provider value={{ addProduct: mockAddProduct }}>
+            <Product product={product} />
+        </CartContext.Provider>
+      </ThemeProvider>
+    );
+
+    expect(screen.getByText('Test Product')).toBeInTheDocument();
+    expect(screen.getByText('Electronics')).toBeInTheDocument();
+    expect(screen.getByText('This is a test product')).toBeInTheDocument();
+    expect(screen.getByText('Test brand')).toBeInTheDocument();
+    expect(screen.getByText('Test model')).toBeInTheDocument();
+    expect(screen.getByText('Blue')).toBeInTheDocument();
+  });
+
+  it('Should call addProduct and redirect to cart page when "Add to cart" button is clicked', () => {
+    const mockRouter = useRouter();
+
+    render(
+        <ThemeProvider theme={theme}>
+            <CartContext.Provider value={{ addProduct: mockAddProduct }}>
+                <Product product={product} />
+            </CartContext.Provider>
+        </ThemeProvider>
+    );
+
+    const addToCartButton = screen.getByText('Add to cart');
+    expect(addToCartButton).toBeInTheDocument();
+
+    fireEvent.click(addToCartButton);
+
+    expect(mockAddProduct).toHaveBeenCalledWith(product);
+
+    expect(mockRouter.push).toHaveBeenCalledWith('/cart');
+  });
 });
-  
