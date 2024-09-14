@@ -1,11 +1,14 @@
-import Head from "next/head";
 import CashDisplay from "@/components/global/CashDisplay";
 import BasicButton from "@/components/global/BasicButton";
+import PageHead from "@/components/global/PageHead";
 import Image from "next/image";
 
 import { Container, Card, Info, Header, Details, ImageContainer } from "@/styles/product";
 import { capitalizeFirstLetter } from "@/services/string";
 import { FaCartShopping } from "react-icons/fa6";
+import { useContext } from "react";
+import { CartContext } from "@/context/cart";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps({ params }) {
     const { id } = params;
@@ -22,19 +25,18 @@ export async function getServerSideProps({ params }) {
 
 export default function Product ({ product }){
     const { title, description, category, image, price, discount, brand, model, color } = product;
+    const { addProduct } = useContext(CartContext);
+    const router = useRouter();
 
     const addToCart = () => {
-        alert("Added to cart");
+        addProduct(product);
+        
+        router.push("/cart");
     };
 
     return (
         <>
-            <Head>
-                <title>{`${title} | MySide Ecommerce`}</title>
-                <meta name="description" content={title} />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+            <PageHead title={`${title} | MySide Ecommerce`} description={title}/>
 
             <Container>
                 <Card>

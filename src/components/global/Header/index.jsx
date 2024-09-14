@@ -31,7 +31,7 @@ export default function Header () {
             pathname: "/",
             query
         });
-    }
+    };
 
     return (
         <Container>
@@ -58,7 +58,7 @@ export default function Header () {
                 </SearchBar>
             </SearchContainer>
 
-            <AiOutlineShoppingCart style={{cursor: "pointer"}} size={30} color={theme.colors.highlight}/>
+            <AiOutlineShoppingCart onClick={() => router.push("/cart")} style={{cursor: "pointer"}} size={30} color={theme.colors.highlight}/>
         </Container>
     )
 }
