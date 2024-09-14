@@ -20,6 +20,11 @@ const GlobalStyle = createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  button{
+    background-color: transparent;
+    border: none;
+  }
 `;
 
 export default GlobalStyle;

@@ -52,9 +52,10 @@ export default function Header () {
                         type="text" 
                         placeholder="Search your product by its name"
                     />
-                    <FaSearch onClick={() => handleSubmit()} size={20} style={{cursor: "pointer"}} color={theme.colors.highlight}/>
+                    <button type="submit">
+                        <FaSearch type="submit" size={20} style={{cursor: "pointer"}} color={theme.colors.highlight}/>
+                    </button>
                 </SearchBar>
-                
             </SearchContainer>
 
             <AiOutlineShoppingCart style={{cursor: "pointer"}} size={30} color={theme.colors.highlight}/>
