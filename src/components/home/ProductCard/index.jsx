@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import CashDisplay from "@/components/global/CashDisplay";
 import Image from "next/image";
+import { summarizeText } from "@/services/string";
 
 export default function ProductCard ({ id, image, title, description, price, discount }) {
     const router = useRouter();
@@ -14,8 +15,8 @@ export default function ProductCard ({ id, image, title, description, price, dis
             </ImageContainer>
             <CashDisplay amount={price} discount={discount} />
 
-            <h4>{title.slice(0, 60) + "..."}</h4>
-            <p>{description.slice(0, 60) + "..."}</p>
+            <h4>{summarizeText(title)}</h4>
+            <p>{summarizeText(description)}</p>
         </Container>
     )
 }

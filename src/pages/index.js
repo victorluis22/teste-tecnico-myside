@@ -1,4 +1,5 @@
 import { AdjustmentsContainer, Grid, ProductsContainer } from "@/styles/home";
+import { findProductByName } from "@/services/search";
 
 import Head from "next/head";
 import ProductCard from "@/components/home/ProductCard";
@@ -11,12 +12,6 @@ import Filter from "@/components/home/Filter";
 const TOTAL_PRODUCTS = 150; 
 const PRODUCTS_PER_PAGE = 30;
 
-export function findProductByName(name, products) {
-  return products.filter(product => 
-    product.title.toLowerCase().includes(name.toLowerCase())
-  );
-}
-
 export async function getServerSideProps({ query }) {
   const currentPage = parseInt(query.page) || 1;
   const productName = query.name || null;
@@ -27,7 +22,7 @@ export async function getServerSideProps({ query }) {
     productsResponse = await fetch(`https://fakestoreapi.in/api/products/category?type=${category}`)
   }
   else{
-    productsResponse = await fetch(`https://fakestoreapi.in/api/products?&limit=${TOTAL_PRODUCTS}`);
+    productsResponse = await fetch(`https://fakestoreapi.in/api/products?limit=${TOTAL_PRODUCTS}`);
   }
 
   const categoryResponse = await fetch("https://fakestoreapi.in/api/products/category");
