@@ -38,7 +38,7 @@ Abra [http://localhost:3000](http://localhost:3000) no browser para ver os resul
 
 ## Testando
 
-Foram criados testes unitários para cada página e componente do projeto usando [Jest](https://jestjs.io/pt-BR/). Para rodar os testes, basta usar o comando:
+Foram criados testes unitários para cada página do projeto usando [Jest](https://jestjs.io/pt-BR/) e [React Testing Library](https://testing-library.com/). Para rodar os testes, basta usar o comando:
 
 ```bash
 npm run test
